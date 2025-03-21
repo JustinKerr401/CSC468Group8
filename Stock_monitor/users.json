@@ -1,0 +1,88 @@
+{
+    "john_doe": {
+        "password": "password123",
+        "stocks": {
+            "AAPL": {
+                "purchase_price": 150.0,
+                "alert_percentage": 500.0,
+                "current_price": 235.92999267578125,
+                "status": "Monitoring"
+            }
+        }
+    },
+    "jane_smith": {
+        "password": "password456",
+        "stocks": {}
+    },
+    "owen_guo": {
+        "password": "password123",
+        "stocks": {
+            "AAPL": {
+                "purchase_price": 100.0,
+                "alert_percentage": 500.0,
+                "current_price": 235.92999267578125,
+                "status": "Monitoring"
+            },
+            "TSLA": {
+                "purchase_price": 200.0,
+                "alert_percentage": 300.0,
+                "current_price": 272.0400085449219,
+                "status": "Monitoring"
+            },
+            "PLTR": {
+                "purchase_price": 123.0,
+                "alert_percentage": 221.0,
+                "current_price": 84.4000015258789,
+                "status": "Monitoring"
+            },
+            "NVDA": {
+                "purchase_price": 102.0,
+                "alert_percentage": 300.0,
+                "current_price": 115.98999786376953,
+                "status": "Monitoring"
+            },
+            "INTC": {
+                "purchase_price": 20.0,
+                "alert_percentage": 25.0,
+                "current_price": 21.329999923706055,
+                "status": "Monitoring"
+            },
+            "T": {
+                "purchase_price": 18.23,
+                "alert_percentage": 40.0,
+                "current_price": 26.219999313354492,
+                "status": "Monitoring"
+            },
+            "SOFI": {
+                "purchase_price": 12.0,
+                "alert_percentage": 42.3,
+                "current_price": 13.09000015258789,
+                "status": "Monitoring"
+            },
+            "BAC": {
+                "purchase_price": 37.0,
+                "alert_percentage": 215.4,
+                "current_price": 42.66999816894531,
+                "status": "Monitoring"
+            },
+            "AMZN": {
+                "purchase_price": 170.0,
+                "alert_percentage": 92.34,
+                "current_price": 203.8000030517578,
+                "status": "Monitoring"
+            },
+            "CCL": {
+                "purchase_price": 31.0,
+                "alert_percentage": 20.45,
+                "current_price": 21.90999984741211,
+                "status": "Monitoring"
+            },
+            "MSFT": {
+                "purchase_price": 300.0,
+                "alert_percentage": 198.0,
+                "current_price": 393.30999755859375,
+                "status": "Monitoring"
+            }
+        }
+    }
+}
