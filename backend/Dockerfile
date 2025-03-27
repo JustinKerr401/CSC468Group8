@@ -1,23 +1,18 @@
-# Use Python as the base image
-FROM python:3.11-slim
+# Use Python base image
+FROM python:3.10-slim
 
-# Set the working directory in the container
+# Set working directory
 WORKDIR /app
 
-# Copy requirements.txt and install dependencies
+# Copy the requirements file and install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the entire backend code to the container
+# Copy the Flask app and other necessary files
 COPY . .
 
-# Set environment variables for Flask
-ENV FLASK_APP=stock_monitor.py
-ENV FLASK_RUN_HOST=0.0.0.0
-ENV FLASK_ENV=development
-
-# Expose the port Flask will run on
+# Expose the Flask API port
 EXPOSE 5000
 
-# Start the Flask application
-CMD ["flask", "run"]
+# Run the Flask app
+CMD ["python", "stock_monitor.py"]
