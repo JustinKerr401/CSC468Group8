@@ -78,5 +78,16 @@
                 "status": "Monitoring"
             }
         }
+    },
+    "jkerr": {
+        "password": "password",
+        "stocks": {
+            "LOGI": {
+                "purchase_price": 10.0,
+                "alert_percentage": 0.0,
+                "current_price": 91.0199966430664,
+                "status": "Monitoring"
+            }
+        }
     }
 }
