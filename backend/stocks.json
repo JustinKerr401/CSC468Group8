@@ -1,8 +1,0 @@
-{
-    "AAPL": {
-        "purchase_price": 150,
-        "alert_percentage": 500,
-        "current_price": 235.92999267578125,
-        "status": "Monitoring"
-    }
-}

@@ -1,5 +1,0 @@
-flask==2.0.2
-flask-session==0.4.0
-pymongo==4.2.0
-yfinance==0.1.70
-werkzeug==2.1.0
