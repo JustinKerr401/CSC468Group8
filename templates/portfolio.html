@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Stock Portfolio</title>
+    <title>Portfolio</title>
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
@@ -11,70 +11,77 @@
   </head>
   <body class="bg-light">
     <div class="container mt-5">
-      <h1 class="text-center">Welcome to Your Portfolio</h1>
-      <a href="/logout" class="btn btn-danger mb-4">Logout</a>
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="text-center mb-4">Your Portfolio</h2>
+              <a href="/logout" class="btn btn-danger mb-3">Logout</a>
+              <form method="POST" action="/portfolio" class="mb-4">
+                <div class="form-group">
+                  <label for="symbol">Stock Symbol</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="symbol"
+                    name="symbol"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="purchase_price">Purchase Price</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="purchase_price"
+                    name="purchase_price"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="alert_percentage">Alert Percentage (%)</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="alert_percentage"
+                    name="alert_percentage"
+                    required
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                  Add Stock
+                </button>
+              </form>
 
-      <!-- Add Stock Form -->
-      <form method="POST" class="mb-4">
-        <div class="row">
-          <div class="col-md-4">
-            <input
-              type="text"
-              name="symbol"
-              class="form-control"
-              placeholder="Stock Symbol"
-              required
-            />
-          </div>
-          <div class="col-md-4">
-            <input
-              type="number"
-              step="0.01"
-              name="purchase_price"
-              class="form-control"
-              placeholder="Purchase Price ($)"
-              required
-            />
-          </div>
-          <div class="col-md-4">
-            <input
-              type="number"
-              step="0.01"
-              name="alert_percentage"
-              class="form-control"
-              placeholder="Alert Percentage (%)"
-              required
-            />
+              {% for symbol, stocks in stocks.items() %}
+                <h3>{{ symbol }}</h3>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Purchase Price</th>
+                      <th>Current Price</th>
+                      <th>Alert Percentage</th>
+                      <th>Status</th>
+                      <th>Last Checked</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for stock in stocks %}
+                      <tr>
+                        <td>{{ stock.purchase_price }}</td>
+                        <td>{{ stock.current_price }}</td>
+                        <td>{{ stock.alert_percentage }}%</td>
+                        <td>{{ stock.status }}</td>
+                        <td>{{ stock.last_checked.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              {% endfor %}
+            </div>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-block mt-3">
-          Add Stock
-        </button>
-      </form>
-
-      <!-- Display Stocks -->
-      <table class="table table-bordered table-hover">
-        <thead class="thead-dark">
-          <tr>
-            <th>Stock Symbol</th>
-            <th>Purchase Price ($)</th>
-            <th>Current Price ($)</th>
-            <th>Alert Percentage (%)</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for symbol, info in stocks.items() %}
-          <tr>
-            <td>{{ symbol }}</td>
-            <td>{{ info.purchase_price }}</td>
-            <td>{{ info.current_price or 'N/A' }}</td>
-            <td>{{ info.alert_percentage }}</td>
-            <td>{{ info.status }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      </div>
     </div>
   </body>
 </html>

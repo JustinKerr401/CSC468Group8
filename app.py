@@ -41,6 +41,7 @@ def logout():
 def portfolio():
     if "email" not in session:
         return redirect("/")
+
     email = session["email"]
 
     if request.method == "POST":
@@ -59,22 +60,31 @@ def portfolio():
             "last_checked": timestamp
         })
 
+    # Find all stocks for the user, regardless of symbol
     stocks = mongo.db.stocks.find({"email": email})
     stock_data = {}
+
     for stock in stocks:
+        # Ensure that each symbol gets its own list of stocks
+        if stock["symbol"] not in stock_data:
+            stock_data[stock["symbol"]] = []
+
         status = "OK"
         if stock["current_price"]:
             change = abs((stock["current_price"] - stock["purchase_price"]) / stock["purchase_price"]) * 100
             if change >= stock["alert_percentage"]:
                 status = "ALERT"
-        stock_data[stock["symbol"]] = {
+
+        stock_data[stock["symbol"]].append({
             "purchase_price": stock["purchase_price"],
             "current_price": stock.get("current_price", "N/A"),
             "alert_percentage": stock["alert_percentage"],
-            "status": status
-        }
+            "status": status,
+            "last_checked": stock["last_checked"]
+        })
 
     return render_template("portfolio.html", stocks=stock_data)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
