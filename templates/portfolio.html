@@ -15,8 +15,13 @@
         <div class="col-md-10">
           <div class="card">
             <div class="card-body">
-              <h2 class="text-center mb-4">Your Portfolio</h2>
+              <!-- Personalized greeting with email -->
+              <h2 class="text-center mb-4">Welcome to your Portfolio, {{ email }}</h2>
+              
+              <!-- Logout button -->
               <a href="/logout" class="btn btn-danger mb-3">Logout</a>
+              
+              <!-- Form to add stock to portfolio -->
               <form method="POST" action="/portfolio" class="mb-4">
                 <div class="form-group">
                   <label for="symbol">Stock Symbol</label>
@@ -53,6 +58,7 @@
                 </button>
               </form>
 
+              <!-- Displaying user's stocks in a table -->
               {% for symbol, stocks in stocks.items() %}
                 <h3>{{ symbol }}</h3>
                 <table class="table">
@@ -68,8 +74,20 @@
                   <tbody>
                     {% for stock in stocks %}
                       <tr>
-                        <td>{{ stock.purchase_price }}</td>
-                        <td>{{ stock.current_price }}</td>
+                        <td>
+                          {% if stock.purchase_price is not none %}
+                            ${{ "{:,.2f}".format(stock.purchase_price | float) }}
+                          {% else %}
+                            N/A
+                          {% endif %}
+                        </td>
+                        <td>
+                          {% if stock.current_price is not none %}
+                            ${{ "{:,.2f}".format(stock.current_price | float) }}
+                          {% else %}
+                            N/A
+                          {% endif %}
+                        </td>                        
                         <td>{{ stock.alert_percentage }}%</td>
                         <td>{{ stock.status }}</td>
                         <td>{{ stock.last_checked.strftime('%Y-%m-%d %H:%M:%S') }}</td>
