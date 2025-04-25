@@ -1,17 +1,18 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for, make_response
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
 from stock_api import get_stock_price
-from datetime import datetime
+from datetime import datetime, timedelta
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 import os
+import io
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "supersecret")
 
 app.config["MONGO_URI"] = "mongodb://mongo:27017/stockapp"
 mongo = PyMongo(app)
-
-from datetime import datetime, timedelta
 
 @app.route("/", methods=["GET", "POST"])
 def login():
@@ -41,7 +42,6 @@ def login():
             return redirect("/portfolio")
         return render_template("login.html", error="Invalid credentials.")
     return render_template("login.html")
-
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -104,6 +104,55 @@ def portfolio():
     return render_template("portfolio.html", email=email, stocks=stock_data)
 
 
+@app.route("/download_pdf")
+def download_pdf():
+    if "email" not in session:
+        return redirect("/")
+
+    email = session["email"]
+    stocks = mongo.db.stocks.find({"email": email})
+
+    # Create a response with a PDF
+    response = make_response(generate_pdf(email, stocks))
+    response.headers["Content-Type"] = "application/pdf"
+    response.headers["Content-Disposition"] = "attachment; filename=portfolio.pdf"
+    
+    return response
+
+def generate_pdf(email, stocks):
+    buffer = io.BytesIO()
+    c = canvas.Canvas(buffer, pagesize=letter)
+    
+    # Add extra newline after "Portfolio for email"
+    c.drawString(100, 750, f"Portfolio for {email}")
+    y_position = 730  # Adjust for the extra line after email
+
+    # Add a newline space after the email header
+    y_position -= 20
+
+    for stock in stocks:
+        c.drawString(100, y_position, f"Symbol: {stock['symbol']}")
+        y_position -= 20  # Extra newline after stock symbol
+
+        c.drawString(100, y_position, f"Purchase Price: ${stock['purchase_price']}")
+        y_position -= 20  # Extra newline after purchase price
+
+        c.drawString(100, y_position, f"Current Price: ${stock.get('current_price', 'N/A')}")
+        y_position -= 20  # Extra newline after current price
+
+        c.drawString(100, y_position, f"Alert Percentage: {stock['alert_percentage']}%")
+        y_position -= 20  # Extra newline after alert percentage
+
+        c.drawString(100, y_position, f"Status: {stock.get('status', 'N/A')}")
+        y_position -= 20  # Extra newline after status
+
+        c.drawString(100, y_position, f"Last Checked: {stock['last_checked']}")
+        y_position -= 40  # Extra space after each stock's information
+
+    c.showPage()
+    c.save()
+    buffer.seek(0)
+    return buffer.read()
 
 
 if __name__ == "__main__":
