@@ -1,18 +1,27 @@
 from flask import Flask, render_template, request, redirect, session, url_for, make_response
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
-from stock_api import get_stock_price
 from datetime import datetime, timedelta
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 import os
 import io
+import yfinance as yf
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "supersecret")
 
 app.config["MONGO_URI"] = "mongodb://mongo:27017/stockapp"
 mongo = PyMongo(app)
+
+def fetch_real_time_price(symbol):
+    try:
+        stock = yf.Ticker(symbol)
+        todays_data = stock.history(period='1d')
+        return float(todays_data['Close'][0])
+    except Exception as e:
+        print(f"Error fetching stock price for {symbol}: {e}")
+        return None
 
 @app.route("/", methods=["GET", "POST"])
 def login():
@@ -21,23 +30,21 @@ def login():
         if user and check_password_hash(user["password"], request.form["password"]):
             session["email"] = user["email"]
 
-            # Get the user's stocks and check if any need updating
             email = session["email"]
             stocks = mongo.db.stocks.find({"email": email})
-
             thirty_minutes_ago = datetime.utcnow() - timedelta(minutes=30)
 
             for stock in stocks:
-                # If the stock hasn't been updated in the last 30 minutes, update it
                 if stock["last_checked"] < thirty_minutes_ago:
-                    current_price = get_stock_price(stock["symbol"])
-                    mongo.db.stocks.update_one(
-                        {"_id": stock["_id"]},
-                        {"$set": {
-                            "current_price": current_price,
-                            "last_checked": datetime.utcnow()
-                        }}
-                    )
+                    current_price = fetch_real_time_price(stock["symbol"])
+                    if current_price is not None:
+                        mongo.db.stocks.update_one(
+                            {"_id": stock["_id"]},
+                            {"$set": {
+                                "current_price": current_price,
+                                "last_checked": datetime.utcnow()
+                            }}
+                        )
 
             return redirect("/portfolio")
         return render_template("login.html", error="Invalid credentials.")
@@ -70,7 +77,7 @@ def portfolio():
         symbol = request.form["symbol"].upper()
         purchase_price = float(request.form["purchase_price"])
         alert_percentage = float(request.form["alert_percentage"])
-        current_price = get_stock_price(symbol)
+        current_price = fetch_real_time_price(symbol)
         timestamp = datetime.utcnow()
 
         mongo.db.stocks.insert_one({
@@ -100,9 +107,7 @@ def portfolio():
             "last_checked": stock["last_checked"]
         })
 
-    # Pass 'email' and 'stock_data' to the template
     return render_template("portfolio.html", email=email, stocks=stock_data)
-
 
 @app.route("/download_pdf")
 def download_pdf():
@@ -112,7 +117,6 @@ def download_pdf():
     email = session["email"]
     stocks = mongo.db.stocks.find({"email": email})
 
-    # Create a response with a PDF
     response = make_response(generate_pdf(email, stocks))
     response.headers["Content-Type"] = "application/pdf"
     response.headers["Content-Disposition"] = "attachment; filename=portfolio.pdf"
@@ -123,37 +127,33 @@ def generate_pdf(email, stocks):
     buffer = io.BytesIO()
     c = canvas.Canvas(buffer, pagesize=letter)
     
-    # Add extra newline after "Portfolio for email"
     c.drawString(100, 750, f"Portfolio for {email}")
-    y_position = 730  # Adjust for the extra line after email
-
-    # Add a newline space after the email header
+    y_position = 730
     y_position -= 20
 
     for stock in stocks:
         c.drawString(100, y_position, f"Symbol: {stock['symbol']}")
-        y_position -= 20  # Extra newline after stock symbol
+        y_position -= 20
 
         c.drawString(100, y_position, f"Purchase Price: ${stock['purchase_price']}")
-        y_position -= 20  # Extra newline after purchase price
+        y_position -= 20
 
         c.drawString(100, y_position, f"Current Price: ${stock.get('current_price', 'N/A')}")
-        y_position -= 20  # Extra newline after current price
+        y_position -= 20
 
         c.drawString(100, y_position, f"Alert Percentage: {stock['alert_percentage']}%")
-        y_position -= 20  # Extra newline after alert percentage
+        y_position -= 20
 
         c.drawString(100, y_position, f"Status: {stock.get('status', 'N/A')}")
-        y_position -= 20  # Extra newline after status
+        y_position -= 20
 
         c.drawString(100, y_position, f"Last Checked: {stock['last_checked']}")
-        y_position -= 40  # Extra space after each stock's information
+        y_position -= 40
 
     c.showPage()
     c.save()
     buffer.seek(0)
     return buffer.read()
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

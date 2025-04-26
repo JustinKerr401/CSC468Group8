@@ -89,5 +89,16 @@
                 "status": "Monitoring"
             }
         }
+    },
+    "test@mail.com": {
+        "password": "password",
+        "stocks": {
+            "AAPL": {
+                "purchase_price": 1000.0,
+                "alert_percentage": 5.0,
+                "current_price": 208.3699951171875,
+                "status": "Monitoring"
+            }
+        }
     }
 }
