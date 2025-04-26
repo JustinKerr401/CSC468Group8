@@ -9,14 +9,14 @@ node = request.XenVM("node")
 node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU22-64-STD"
 node.routable_control_ip = "true"
 
-# Update packages and install git and apache2
-node.addService(rspec.Execute(shell="/bin/sh", command="sudo apt update"))
-node.addService(rspec.Execute(shell="/bin/sh", command="sudo apt install -y apache2 git"))
+# Update packages and install git and apache2 without prompts
+node.addService(rspec.Execute(shell="/bin/sh", command="sudo apt update -y"))
+node.addService(rspec.Execute(shell="/bin/sh", command="sudo DEBIAN_FRONTEND=noninteractive apt install -y apache2 git"))
 
 # Clone your GitHub repo
 node.addService(rspec.Execute(shell="/bin/sh", command="git clone https://github.com/JustinKerr401/Stock-Trader-Aider.git"))
 
-# Optionally, start apache2 service
+# Start apache2 service
 node.addService(rspec.Execute(shell="/bin/sh", command="sudo systemctl start apache2"))
 node.addService(rspec.Execute(shell="/bin/sh", command="sudo systemctl status apache2"))
 
