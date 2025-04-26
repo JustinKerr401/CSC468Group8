@@ -14,7 +14,7 @@ node.addService(rspec.Execute(shell="/bin/sh", command="sudo apt update"))
 node.addService(rspec.Execute(shell="/bin/sh", command="sudo apt install -y apache2 git"))
 
 # Clone your GitHub repo
-node.addService(rspec.Execute(shell="/bin/sh", command="git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git"))
+node.addService(rspec.Execute(shell="/bin/sh", command="git clone https://github.com/JustinKerr401/Stock-Trader-Aider.git"))
 
 # Optionally, start apache2 service
 node.addService(rspec.Execute(shell="/bin/sh", command="sudo systemctl start apache2"))
