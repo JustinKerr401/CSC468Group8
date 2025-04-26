@@ -17,10 +17,13 @@
             <div class="card-body">
               <!-- Personalized greeting with email -->
               <h2 class="text-center mb-4">Welcome to your Portfolio, {{ email }}</h2>
-              
-              <!-- Logout button -->
-              <a href="/logout" class="btn btn-danger mb-3">Logout</a>
-              
+
+              <!-- Button Group Centered -->
+              <div class="d-flex justify-content-center mb-4">
+                <a href="/logout" class="btn btn-danger mr-3">Logout</a>
+                <a href="/download_pdf" class="btn btn-success">Download Portfolio as PDF</a>
+              </div>
+
               <!-- Form to add stock to portfolio -->
               <form method="POST" action="/portfolio" class="mb-4">
                 <div class="form-group">
@@ -57,11 +60,6 @@
                   Add Stock
                 </button>
               </form>
-
-              <!-- Download PDF button -->
-              <a href="/download_pdf" class="btn btn-success mb-4">
-                Download Portfolio as PDF
-              </a>
 
               <!-- Displaying user's stocks in a table -->
               {% for symbol, stock_list in stocks.items() %}
