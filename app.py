@@ -7,6 +7,7 @@ from reportlab.pdfgen import canvas
 import os
 import io
 import yfinance as yf
+from bson import ObjectId  # Import ObjectId for MongoDB ObjectID
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "supersecret")
@@ -104,10 +105,22 @@ def portfolio():
             "current_price": stock.get("current_price", "N/A"),
             "alert_percentage": stock["alert_percentage"],
             "status": status,
-            "last_checked": stock["last_checked"]
+            "last_checked": stock["last_checked"],
+            "_id": stock["_id"]  # Include the _id for deletion
         })
 
     return render_template("portfolio.html", email=email, stocks=stock_data)
+
+@app.route("/delete_stock/<stock_id>", methods=["POST"])
+def delete_stock(stock_id):
+    if "email" not in session:
+        return redirect("/")
+
+    # Find and delete the stock from the database
+    mongo.db.stocks.delete_one({"_id": ObjectId(stock_id)})
+
+    # Redirect back to the portfolio page
+    return redirect("/portfolio")
 
 @app.route("/download_pdf")
 def download_pdf():
