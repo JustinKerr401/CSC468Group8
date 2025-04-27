@@ -1,0 +1,256 @@
+{
+    "john_doe": {
+        "password": "1234",
+        "stocks": {
+            "MSFT": {
+                "buy_price": 231.0,
+                "quantity": 11,
+                "current_price": 362.86,
+                "value": 3991.46,
+                "percentage_change": 57.08
+            },
+            "TWLO": {
+                "buy_price": 100.0,
+                "quantity": 1,
+                "current_price": 82.92,
+                "value": 82.92,
+                "percentage_change": -17.08
+            },
+            "PLTR": {
+                "buy_price": 11.0,
+                "quantity": 1,
+                "current_price": 93.86,
+                "value": 93.86,
+                "percentage_change": 753.27
+            },
+            "AAPL": {
+                "buy_price": 1.0,
+                "quantity": 370,
+                "current_price": 198.14,
+                "value": 73311.8,
+                "percentage_change": 19714.0
+            },
+            "NVDA": {
+                "buy_price": 1.0,
+                "quantity": 1,
+                "current_price": 99.03,
+                "value": 99.03,
+                "percentage_change": 9803.0
+            },
+            "T": {
+                "buy_price": 12.0,
+                "quantity": 92492,
+                "current_price": 26.81,
+                "value": 2479710.52,
+                "percentage_change": 123.42
+            },
+            "IQ": {
+                "buy_price": 5.0,
+                "quantity": 2,
+                "current_price": "N/A",
+                "value": "N/A",
+                "percentage_change": "N/A"
+            }
+        }
+    },
+    "bob": {
+        "password": "123",
+        "stocks": {
+            "AAPL": {
+                "buy_price": 122.0,
+                "quantity": 1,
+                "current_price": 198.06,
+                "value": 198.06,
+                "percentage_change": 62.34
+            }
+        }
+    },
+    "joe": {
+        "password": "123",
+        "stocks": {
+            "T": {
+                "buy_price": 12.0,
+                "quantity": 1,
+                "current_price": 26.93,
+                "value": 26.93,
+                "percentage_change": 124.42
+            },
+            "IQ": {
+                "buy_price": 1.0,
+                "quantity": 2,
+                "current_price": "N/A",
+                "value": "N/A",
+                "percentage_change": "N/A"
+            }
+        }
+    },
+    "Owen": {
+        "password": "123",
+        "stocks": {
+            "T": {
+                "buy_price": 232.0,
+                "quantity": 2,
+                "current_price": 26.93,
+                "value": 53.86,
+                "percentage_change": -88.39
+            }
+        }
+    },
+    "123": {
+        "password": "123",
+        "stocks": {}
+    },
+    "1234": {
+        "password": "1234",
+        "stocks": {
+            "T": {
+                "buy_price": 232.0,
+                "quantity": 1,
+                "current_price": 26.99,
+                "value": 26.99,
+                "percentage_change": -88.37,
+                "alert": ""
+            }
+        }
+    },
+    "12": {
+        "password": "12",
+        "stocks": {
+            "BA": {
+                "buy_price": 122.0,
+                "quantity": 2,
+                "current_price": 177.77,
+                "alert_percentage": 10.0,
+                "value": 355.54,
+                "percentage_change": 45.71,
+                "alert": "Already gained 10.0%"
+            },
+            "T": {
+                "buy_price": 21.91,
+                "quantity": 11,
+                "current_price": 26.78,
+                "alert_percentage": 30.0,
+                "value": 294.58,
+                "percentage_change": 22.23,
+                "alert": ""
+            },
+            "AAPL": {
+                "buy_price": 122.0,
+                "quantity": 1,
+                "current_price": 209.23,
+                "alert_percentage": 12.0,
+                "value": 209.23,
+                "percentage_change": 71.5,
+                "alert": "Already gained 12.0%"
+            },
+            "NVDA": {
+                "buy_price": 12312.0,
+                "quantity": 2,
+                "current_price": 110.96,
+                "alert_percentage": 22.0,
+                "value": 221.92,
+                "percentage_change": -99.1,
+                "alert": "Already dropped 22.0%"
+            },
+            "GOOGL": {
+                "buy_price": 382.0,
+                "quantity": 12,
+                "current_price": 161.86,
+                "alert_percentage": 20.0,
+                "value": 1942.32,
+                "percentage_change": -57.63,
+                "alert": "Already dropped 20.0%"
+            },
+            "JPM": {
+                "buy_price": 75.0,
+                "quantity": 21,
+                "current_price": 243.53,
+                "alert_percentage": 23.0,
+                "value": 5114.13,
+                "percentage_change": 224.71,
+                "alert": "Already gained 23.0%"
+            },
+            "KO": {
+                "buy_price": 48.0,
+                "quantity": 24,
+                "current_price": 71.91,
+                "alert_percentage": 32.0,
+                "value": 1725.84,
+                "percentage_change": 49.81,
+                "alert": "Already gained 32.0%"
+            },
+            "PEP": {
+                "buy_price": 25.0,
+                "quantity": 52,
+                "current_price": 133.3,
+                "alert_percentage": 47.0,
+                "value": 6931.6,
+                "percentage_change": 433.2,
+                "alert": "Already gained 47.0%"
+            },
+            "VZ": {
+                "buy_price": 203.0,
+                "quantity": 12,
+                "current_price": 41.88,
+                "alert_percentage": 201.0,
+                "value": 502.56,
+                "percentage_change": -79.37,
+                "alert": ""
+            },
+            "DIS": {
+                "buy_price": 41.0,
+                "quantity": 272,
+                "current_price": 90.26,
+                "alert_percentage": 200.0,
+                "value": 24550.72,
+                "percentage_change": 120.15,
+                "alert": ""
+            },
+            "ABNB": {
+                "buy_price": 106.0,
+                "quantity": 632,
+                "current_price": 122.49,
+                "alert_percentage": 156.0,
+                "value": 77413.68,
+                "percentage_change": 15.56,
+                "alert": ""
+            }
+        }
+    },
+    "1": {
+        "password": "1",
+        "stocks": {}
+    },
+    "12345": {
+        "password": "12345",
+        "stocks": {
+            "ABNB": {
+                "buy_price": 106.0,
+                "quantity": 632,
+                "current_price": 122.49,
+                "alert_percentage": 156.0,
+                "value": 77413.68,
+                "percentage_change": 15.56,
+                "alert": ""
+            },
+            "T": {
+                "buy_price": 21.0,
+                "quantity": 1,
+                "current_price": 26.78,
+                "alert_percentage": 231.0,
+                "value": 26.78,
+                "percentage_change": 27.52,
+                "alert": ""
+            },
+            "BA": {
+                "buy_price": 2.0,
+                "quantity": 1,
+                "current_price": 177.77,
+                "alert_percentage": 3.0,
+                "value": 177.77,
+                "percentage_change": 8788.5,
+                "alert": "Gained 3.0%"
+            }
+        }
+    }
+}
