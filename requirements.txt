@@ -1,6 +1,0 @@
-Flask==2.2.5
-flask-pymongo==2.3.0
-pymongo==4.7.0
-yfinance==0.2.36
-werkzeug==2.2.3
-reportlab==3.6.0

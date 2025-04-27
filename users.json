@@ -1,0 +1,28 @@
+{
+    "john_doe": {
+        "password": "1234",
+        "stocks": {
+            "AAPL": {
+                "buy_price": 150,
+                "quantity": 10,
+                "current_price": 190.83,
+                "value": 1905.1,
+                "percentage_change": 27.01
+            },
+            "MSFT": {
+                "buy_price": 231.0,
+                "quantity": 11,
+                "current_price": 357.36,
+                "value": 3931.29,
+                "percentage_change": 54.71
+            },
+            "TWLO": {
+                "buy_price": 100.0,
+                "quantity": 1,
+                "current_price": 81.23,
+                "value": 81.03,
+                "percentage_change": -18.97
+            }
+        }
+    }
+}

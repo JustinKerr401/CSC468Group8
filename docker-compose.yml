@@ -1,19 +1,38 @@
+version: "3.9"
+
 services:
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.web
+    container_name: flask_app
     ports:
       - "5000:5000"
     volumes:
-      - .:/app
+      - ./app:/app
     depends_on:
       - mongo
+    restart: always
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.scheduler
+    container_name: price_scheduler
+    volumes:
+      - ./app:/app
+    depends_on:
+      - mongo
+    restart: always
 
   mongo:
-    image: mongo:5
+    image: mongo:5.0
+    container_name: mongo_db
     ports:
       - "27017:27017"
     volumes:
-      - mongo-data:/data/db
+      - mongo_data:/data/db
+    restart: always
 
 volumes:
-  mongo-data:
+  mongo_data:
