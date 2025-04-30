@@ -255,6 +255,16 @@
     },
     "jkerr": {
         "password": "password",
-        "stocks": {}
+        "stocks": {
+            "AAPL": {
+                "buy_price": 4.0,
+                "quantity": 500,
+                "current_price": 211.31,
+                "alert_percentage": 5.0,
+                "value": 105655.0,
+                "percentage_change": 5182.75,
+                "alert": "Already gained 5.0%"
+            }
+        }
     }
 }

@@ -1,10 +1,20 @@
 import schedule
 import time
 import datetime
-from stock_monitor import update_global_price_cache  
+import subprocess
+from stock_monitor import update_global_price_cache
 import pytz
 
 print("✅ Scheduler script has started running...")
+
+# --- NEW: Run the stock list insertion script once on startup ---
+try:
+    print("📥 Inserting initial stock list...")
+    subprocess.run(["python", "scripts/insert_stock_list.py"], check=True)
+    print("✅ insert_stock_list.py completed successfully.")
+except subprocess.CalledProcessError as e:
+    print(f"❌ Error running insert_stock_list.py: {e}")
+# ----------------------------------------------------------------
 
 # Timezone setup
 EST = pytz.timezone("US/Eastern")
