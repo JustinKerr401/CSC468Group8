@@ -14,7 +14,7 @@ node.addService(rspec.Execute(shell="/bin/sh", command="sudo apt update -y"))
 node.addService(rspec.Execute(shell="/bin/sh", command="sudo DEBIAN_FRONTEND=noninteractive apt install -y apache2 git"))
 
 # Clone your GitHub repo (forcing the use of main branch into /home/Stock-Trader-Aider)
-node.addService(rspec.Execute(shell="/bin/sh", command="sudo git clone --branch main https://github.com/JustinKerr401/Stock-Trader-Aider.git"))
+node.addService(rspec.Execute(shell="/bin/sh", command="sudo git clone --branch main https://github.com/JustinKerr401/Stock-Trader-Aider.git /home/Stock-Trader-Aider"))
 
 # Start apache2 service
 node.addService(rspec.Execute(shell="/bin/sh", command="sudo systemctl start apache2"))
