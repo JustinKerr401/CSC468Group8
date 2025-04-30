@@ -9,11 +9,23 @@ node = request.XenVM("node")
 node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU22-64-STD"
 node.routable_control_ip = "true"
 
-# Update packages and install git and apache2 without prompts
+# Update package list and install required tools
 node.addService(rspec.Execute(shell="/bin/sh", command="sudo apt update -y"))
-node.addService(rspec.Execute(shell="/bin/sh", command="sudo DEBIAN_FRONTEND=noninteractive apt install -y apache2 git"))
+node.addService(rspec.Execute(shell="/bin/sh", command="sudo DEBIAN_FRONTEND=noninteractive apt install -y apache2 git curl"))
 
-# Clone your GitHub repo (forcing the use of main branch into /home/Stock-Trader-Aider)
+# Install Docker
+node.addService(rspec.Execute(shell="/bin/sh", command="curl -fsSL https://get.docker.com -o get-docker.sh"))
+node.addService(rspec.Execute(shell="/bin/sh", command="sudo sh get-docker.sh"))
+node.addService(rspec.Execute(shell="/bin/sh", command="sudo usermod -aG docker $(whoami)"))
+
+# Install Docker Compose v2
+node.addService(rspec.Execute(
+    shell="/bin/sh",
+    command="sudo curl -L \"https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose"
+))
+node.addService(rspec.Execute(shell="/bin/sh", command="sudo chmod +x /usr/local/bin/docker-compose"))
+
+# Clone your GitHub repo into a user-accessible directory
 node.addService(rspec.Execute(shell="/bin/sh", command="sudo git clone --branch main https://github.com/JustinKerr401/Stock-Trader-Aider.git /home/Stock-Trader-Aider"))
 
 # Start apache2 service
